@@ -1,0 +1,6 @@
+node_modules
+*tempCodeRunnerFile.py
+package-lock.json
+package.json
+*.cpp
+*.exe
