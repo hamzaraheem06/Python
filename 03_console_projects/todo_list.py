@@ -56,7 +56,7 @@ def check_todo(todo_list):
         
     print(f"No such task with id {complete_id} exist.")
 
-# debug: correct the archive task method as the archived task is not showing in the archived_list
+
 def archive_task(todo_list: list, archived_list: list):
     if not len(todo_list):
         print("Empty todo list. Cannot perform this operation")
@@ -66,9 +66,10 @@ def archive_task(todo_list: list, archived_list: list):
     complete_id = int(input("Enter the id of the task: ")) # knowing which one to tick
     for i in todo_list:
         if i["id"] == complete_id:
-            archived_list.extend(i)
+            archived_list.append(i)
+            print(f"'{i["task"]}' has been moved to archive.")
             todo_list.remove(i)
-            return
+            return todo_list, archived_list
         
     print(f"No such task with id {complete_id} exist.")
 
@@ -150,7 +151,7 @@ def main(): # creating the user interface
             case 'c':
                 check_todo(todo_tasks)
             case 'at':
-                archive_task(todo_tasks, archived_tasks)
+                todo_tasks, archived_tasks = archive_task(todo_tasks, archived_tasks)
             case 'ma':
                 mark_all(todo_tasks)
             case 'ch':
