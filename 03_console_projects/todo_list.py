@@ -129,17 +129,47 @@ def remove_completed_todos(todo_list):
 def archive_complete(todo_list):
     return [task for task in todo_list if task["isCompleted"]] # self explanatory
 
+def show_statistics(todo_list, archived_list):
+    if not len(todo_list): # handling the empty list case
+        print("Empty todo list.")
+        return
+
+    is_archived_included = input("Do you want to include the archived list in the statistics ( Y or y for Yes )? ") 
+
+    total_tasks = len(todo_list)
+
+    if is_archived_included == 'Y' or is_archived_included == 'y':
+         total_tasks += len(archived_list)
+    
+    completed_tasks = 0
+    for i in todo_list:
+        if i["isCompleted"]: 
+            completed_tasks += 1
+
+    if is_archived_included == 'Y' or is_archived_included == 'y':
+        for i in archived_list:
+            if i["isCompleted"]: 
+                completed_tasks += 1
+
+    pending_tasks = total_tasks - completed_tasks
+
+    # displaying the stats
+    print(f"Total tasks: {total_tasks}")
+    print(f"Completed tasks: {completed_tasks}")
+    print(f"Pending tasks: {pending_tasks}")
+    print(f"Completion rate: {round(completed_tasks / total_tasks, ndigits=2) * 100}")
+
 
 # todo: https://chatgpt.com/c/678e22da-53cc-800a-a1ad-d4eadb1ad6cb
 
 def help():
-    print("\na) Add a task\nr) Remove a task \nc) Check a task\nat) Archive a task\nma) Mark all as incomplete/complete\nch) Change a task\nd) Display todos\nac) Archive completed tasks\nda) Display archived tasks\nrc) Remove completed tasks\nh) Help\nq) Exit\n")
+    print("\na) Add a task\nr) Remove a task \nc) Check a task\nat) Archive a task\nma) Mark all as incomplete/complete\nch) Change a task\nd) Display todos\nac) Archive completed tasks\nda) Display archived tasks\nrc) Remove completed tasks\nss) Show statistics\nh) Help\nq) Exit\n")
 
 def main(): # creating the user interface
     todo_tasks = []
     archived_tasks = []
     print("Todo List:")
-    print("\na) Add a task\nr) Remove a task \nc) Check a task\nat) Archive a task\nma) Mark all as incomplete/complete\nch) Change a task\nd) Display todos\nac) Archive completed tasks\nda) Display archived tasks\nrc) Remove completed tasks\nh) Help\nq) Exit\n")
+    print("\na) Add a task\nr) Remove a task \nc) Check a task\nat) Archive a task\nma) Mark all as incomplete/complete\nch) Change a task\nd) Display todos\nac) Archive completed tasks\nda) Display archived tasks\nrc) Remove completed tasks\nss) Show statistics\nh) Help\nq) Exit\n")
     choice = None
     while choice != 'q':
         choice = input("Your choice? ")
@@ -169,6 +199,8 @@ def main(): # creating the user interface
                 print("The completed tasks have been moved to the archived list.")
             case 'da':
                 display_todos(archived_tasks)
+            case 'ss':
+                show_statistics(todo_list=todo_tasks, archived_list=archived_tasks)
             case 'h':
                 help()
             case 'q':
