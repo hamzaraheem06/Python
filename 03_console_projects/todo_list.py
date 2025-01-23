@@ -14,25 +14,69 @@ def add_task(todo_tasks):
 
 
 def remove_todo(todo_list):
+    if not len(todo_list):
+        print("The todo list is empty. No available task to be removed.")
+        return
+    display_todos(todo_list)
     remove_id = int(input("Enter the id of the task to be removed: ")) # knowing which one to evict
-    todo_list = [task for task in todo_list if task["id"] != remove_id] # hunting the mother fucker down
-    print(f"The task with id {remove_id} has been removed")
-    return todo_list # returning the HAS RIGHTS list
-            
+    # todo_list = [task for task in todo_list if task["id"] != remove_id] # hunting the mother fucker down
+    new_list = [] # creating a new list for the updation
+
+    for i in todo_list:
+        if i["id"] == remove_id:
+            print(f"'{i["task"]}' has been removed")
+            continue
+        new_list.append(i)
+    
+    if len(todo_list) == len(new_list):
+        print(f"No such task with id {remove_id} exist.")
+
+    return new_list # returning the HAS RIGHTS list
+
+    
+
 # define: Filter in Python -> new_list = [expression for item in iterable if condition]
 
 
 def check_todo(todo_list):
+    if not len(todo_list):
+        print("Empty todo list. Cannot perform this operation")
+        return
+
+    display_todos(todo_list)
     complete_id = int(input("Enter the id of the completed task: ")) # knowing which one to tick
     for i in todo_list:
         if i["id"] == complete_id:
+            if i['isCompleted']:
+                print(f"'{i["task"]}' has already been marked as completed")
+                return
             i["isCompleted"] = True # ticking the concerning one
             print(f"'{i["task"]}' has been marked as completed")
             return
         
     print(f"No such task with id {complete_id} exist.")
 
+# debug: correct the archive task method as the archived task is not showing in the archived_list
+def archive_task(todo_list: list, archived_list: list):
+    if not len(todo_list):
+        print("Empty todo list. Cannot perform this operation")
+        return
+
+    display_todos(todo_list)
+    complete_id = int(input("Enter the id of the task: ")) # knowing which one to tick
+    for i in todo_list:
+        if i["id"] == complete_id:
+            archived_list.extend(i)
+            todo_list.remove(i)
+            return
+        
+    print(f"No such task with id {complete_id} exist.")
+
 def mark_all(todo_list):
+    if not len(todo_list) :
+        print("Empty todo list. Cannot perform this operation")
+        return
+    
     choice = input("Mark as: \n'T' or 't' for complete\n'F' or 'f' for incomplete\n")
     
     match choice:
@@ -49,6 +93,11 @@ def mark_all(todo_list):
 
 
 def change_todo(todo_list):
+    if not len(todo_list) :
+        print("Empty todo list. Cannot perform this operation")
+        return
+    
+    display_todos(todo_list)
     change_id = int(input("Enter the id of the task to be changed: "))
 
     for i in todo_list:
@@ -61,7 +110,7 @@ def change_todo(todo_list):
     print(f"No such task with id {change_id} exist.")
 
 def display_todos(todo_list):
-    if len(todo_list) == 0:
+    if not len(todo_list) :
         print("Empty todo list.")
         return
 
@@ -76,15 +125,20 @@ def display_todos(todo_list):
 def remove_completed_todos(todo_list):
     return [task for task in todo_list if not task["isCompleted"]]
 
+def archive_complete(todo_list):
+    return [task for task in todo_list if task["isCompleted"]]
+
+
 # todo: https://chatgpt.com/c/678e22da-53cc-800a-a1ad-d4eadb1ad6cb
 
 def help():
-    print("\na) Add a task\nr) Remove a task \nc) Check a task\nma) Mark all as incomplete/complete\nch) Change a task\nd) Display todos\nrc) Remove completed tasks\nh) Help\nq) Exit\n")
+    print("\na) Add a task\nr) Remove a task \nc) Check a task\nat) Archive a task\nma) Mark all as incomplete/complete\nch) Change a task\nd) Display todos\nac) Archive completed tasks\nda) Display archived tasks\nrc) Remove completed tasks\nh) Help\nq) Exit\n")
 
 def main(): # creating the user interface
     todo_tasks = []
+    archived_tasks = []
     print("Todo List:")
-    print("\na) Add a task\nr) Remove a task \nc) Check a task\nma) Mark all as incomplete/complete\nch) Change a task\nd) Display todos\nrc) Remove completed tasks\nh) Help\nq) Exit\n")
+    print("\na) Add a task\nr) Remove a task \nc) Check a task\nat) Archive a task\nma) Mark all as incomplete/complete\nch) Change a task\nd) Display todos\nac) Archive completed tasks\nda) Display archived tasks\nrc) Remove completed tasks\nh) Help\nq) Exit\n")
     choice = None
     while choice != 'q':
         choice = input("Your choice? ")
@@ -92,21 +146,28 @@ def main(): # creating the user interface
             case 'a':
                 add_task(todo_tasks)
             case 'r':
-                display_todos(todo_tasks)
                 todo_tasks = remove_todo(todo_tasks)
             case 'c':
-                display_todos(todo_tasks)
                 check_todo(todo_tasks)
+            case 'at':
+                archive_task(todo_tasks, archived_tasks)
             case 'ma':
                 mark_all(todo_tasks)
             case 'ch':
-                display_todos(todo_tasks)
                 change_todo(todo_tasks)
             case 'd':
                 display_todos(todo_tasks)
             case 'rc':
                 todo_tasks = remove_completed_todos(todo_tasks)
                 print("The completed tasks have been removed from the todo list.")
+            case 'ac':
+                new_archived = archive_complete(todo_tasks)  # Archive completed tasks
+                archived_tasks.extend(new_archived) # adding the new archived to the existing list
+                # note: using extend because append will add the new archived as a whole list in the archived_list. on the other hand, extend adds the elements individually in the list
+                todo_tasks = remove_completed_todos(todo_tasks) # removing the complete from the original list
+                print("The completed tasks have been moved to the archived list.")
+            case 'da':
+                display_todos(archived_tasks)
             case 'h':
                 help()
             case 'q':
