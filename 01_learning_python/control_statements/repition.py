@@ -62,4 +62,5 @@ else:
 # while controling_condition:
     # statements
 
-# note: like for-else there is while-else too which is based on the  
+# note: like for-else there is while-else too which is based on the same concept as the for-else loop. the else block only gets executed when the loop terminates normally. if there is a termination due to a break statement, the else block is ignored by the compiler.
+
