@@ -1,13 +1,28 @@
 import random as r
+categories = ['work', 'personal', 'study', 'finance', 'health']
 
 def add_task(todo_tasks):
     task = {
         "task": "",
         "isCompleted": False,
-        "id": None
+        "id": None,
+        "category": None
     } # defining a todo structure
     task["task"] = input("Write a todo : ") # initializing the todo task 
     task["id"] = r.randrange(1000, 5656) // r.randrange(1, 50) # generating a random id to unique tracking of a task
+
+    add_category = input("Do you want to assign a category  ( Y or y for Yes )? ")
+    if add_category == "Y" or add_category == 'y':
+        # providing a category option list
+        for index, category in enumerate(categories):
+            print(f"{index}) {category}")
+        categoriy_index = int(input(f"Category: "))
+        
+        while not(0 <= categoriy_index < len(categories)):
+            print("Invalid category.")
+            categoriy_index = int(input(f"Category: "))
+        
+        task["category"] = categories[categoriy_index]
 
     todo_tasks.append(task) # adding the todo to the list
     print(f"'{task['task']}' has been added to todo list.") 
@@ -115,11 +130,12 @@ def display_todos(todo_list):
         print("Empty todo list.")
         return
 
-    print(f"{'ID':<10} {'Task':<50} {'Completed':<10}") # :<10 is left-align, used to set character lenght of a string
-    print("-" * 71) # header underline
+    print(f"{'ID':<10} {'Task':<50} {'Completed':<10} {'Category':<10}") # :<10 is left-align, used to set character lenght of a string
+    print("-" * 81) # header underline
 
     for i in todo_list:
-        print(f"{str(i['id']):<10} {i['task']:<50} {str(i['isCompleted']):<10}")
+        category = "N/A" if not i["category"] else i["category"]
+        print(f"{str(i['id']):<10} {i['task']:<50} {str(i['isCompleted']):<10} {category:<10}")
     # using a for each loop to display the task information
 
 
@@ -136,21 +152,28 @@ def show_statistics(todo_list, archived_list):
 
     is_archived_included = input("Do you want to include the archived list in the statistics ( Y or y for Yes )? ") 
 
-    total_tasks = len(todo_list)
+    all_tasks = todo_list + (archived_list if is_archived_included.lower() == 'y' else [])
 
-    if is_archived_included == 'Y' or is_archived_included == 'y':
-         total_tasks += len(archived_list)
+    total_tasks = len(all_tasks)
     
     completed_tasks = 0
+    category_wise_count = [{"count": 0, "completed": 0} for _ in categories]
+    uncat_task = {"count": 0, "completed": 0}
     for i in todo_list:
-        if i["isCompleted"]: 
+        if not i['category']:
+            uncat_task["count"] += 1
+            if i['isCompleted']:
+                uncat_task["completed"] += 1
+                completed_tasks += 1
+            continue
+        
+        category_index = categories.index(i['category']) # instead of hardcoding the index, we get the index everytime for a task and then categorize it.
+        category_wise_count[category_index]["count"] += 1
+        if i['isCompleted']:
+            category_wise_count[category_index]["completed"] += 1
             completed_tasks += 1
 
-    if is_archived_included == 'Y' or is_archived_included == 'y':
-        for i in archived_list:
-            if i["isCompleted"]: 
-                completed_tasks += 1
-
+        
     pending_tasks = total_tasks - completed_tasks
 
     # displaying the stats
@@ -158,6 +181,15 @@ def show_statistics(todo_list, archived_list):
     print(f"Completed tasks: {completed_tasks}")
     print(f"Pending tasks: {pending_tasks}")
     print(f"Completion rate: {round(completed_tasks / total_tasks, ndigits=2) * 100}")
+
+    # displaying the categorized stats
+
+    print("\nCategorized Statistics: \n")
+
+    for i in range(0, len(categories)):
+        print(f"{categories[i].title()} : {category_wise_count[i]['count']} Task(s), {category_wise_count[i]['completed']} Completed, {category_wise_count[i]['count'] - category_wise_count[i]['completed']} Pending.")
+    else:
+        print(f"Uncategorized : {uncat_task['count']} Task(s), {uncat_task['completed']} Completed, {uncat_task['count'] - uncat_task['completed']} Pending.")
 
 
 # todo: https://chatgpt.com/c/678e22da-53cc-800a-a1ad-d4eadb1ad6cb
