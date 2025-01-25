@@ -12,7 +12,7 @@ def add_task(todo_tasks):
     task["id"] = r.randrange(1000, 5656) // r.randrange(1, 50) # generating a random id to unique tracking of a task
 
     add_category = input("Do you want to assign a category  ( Y or y for Yes )? ")
-    if add_category == "Y" or add_category == 'y':
+    if add_category.lower() == 'y':
         # providing a category option list
         for index, category in enumerate(categories):
             print(f"{index}) {category}")
@@ -27,7 +27,6 @@ def add_task(todo_tasks):
     todo_tasks.append(task) # adding the todo to the list
     print(f"'{task['task']}' has been added to todo list.") 
 
-
 def remove_todo(todo_list):
     if not len(todo_list): # handling empty list case.
         print("The todo list is empty. No available task to be removed.")
@@ -35,6 +34,7 @@ def remove_todo(todo_list):
     display_todos(todo_list) # displaying all the task to assist user
     remove_id = int(input("Enter the id of the task to be removed: ")) # knowing which one to evict
     # todo_list = [task for task in todo_list if task["id"] != remove_id] # hunting the mother fucker down
+
     new_list = [] # creating a new list for the updation
 
     for i in todo_list:
@@ -48,10 +48,10 @@ def remove_todo(todo_list):
 
     return new_list # returning the HAS RIGHTS list
 
-    
-
 # define: Filter in Python -> new_list = [expression for item in iterable if condition]
 
+def remove_all(list):
+    return []
 
 def check_todo(todo_list):
     if not len(todo_list): # handling empty list case.
@@ -70,7 +70,6 @@ def check_todo(todo_list):
             return
         
     print(f"No such task with id {complete_id} exist.") # handling 404 case
-
 
 def archive_task(todo_list: list, archived_list: list):
     if not len(todo_list): # handling empty list case
@@ -107,7 +106,6 @@ def mark_all(todo_list):
         case _:
             print("Invalid operation.😬")
 
-
 def change_todo(todo_list):
     if not len(todo_list): # handling emtpy list case
         print("Empty todo list. Cannot perform this operation")
@@ -138,7 +136,6 @@ def display_todos(todo_list):
         print(f"{str(i['id']):<10} {i['task']:<50} {str(i['isCompleted']):<10} {category:<10}")
     # using a for each loop to display the task information
 
-
 def remove_completed_todos(todo_list):
     return [task for task in todo_list if not task["isCompleted"]] # self explanatory
 
@@ -159,7 +156,7 @@ def show_statistics(todo_list, archived_list):
     completed_tasks = 0
     category_wise_count = [{"count": 0, "completed": 0} for _ in categories]
     uncat_task = {"count": 0, "completed": 0}
-    for i in todo_list:
+    for i in all_tasks:
         if not i['category']:
             uncat_task["count"] += 1
             if i['isCompleted']:
@@ -173,11 +170,10 @@ def show_statistics(todo_list, archived_list):
             category_wise_count[category_index]["completed"] += 1
             completed_tasks += 1
 
-        
     pending_tasks = total_tasks - completed_tasks
 
     # displaying the stats
-    print(f"Total tasks: {total_tasks}")
+    print(f"\nTotal tasks: {total_tasks}")
     print(f"Completed tasks: {completed_tasks}")
     print(f"Pending tasks: {pending_tasks}")
     print(f"Completion rate: {round(completed_tasks / total_tasks, ndigits=2) * 100}")
@@ -187,23 +183,70 @@ def show_statistics(todo_list, archived_list):
     print("\nCategorized Statistics: \n")
 
     for i in range(0, len(categories)):
-        print(f"{categories[i].title()} : {category_wise_count[i]['count']} Task(s), {category_wise_count[i]['completed']} Completed, {category_wise_count[i]['count'] - category_wise_count[i]['completed']} Pending.")
+        print(
+    f"{categories[i].title():<15} : "
+    f"{category_wise_count[i]['count']:>3} Task(s), "
+    f"{category_wise_count[i]['completed']:>3} Completed, "
+    f"{(category_wise_count[i]['count'] - category_wise_count[i]['completed']):>3} Pending."
+)
+
     else:
-        print(f"Uncategorized : {uncat_task['count']} Task(s), {uncat_task['completed']} Completed, {uncat_task['count'] - uncat_task['completed']} Pending.")
+        print(
+    f"{'Uncategorized':<15} : "
+    f"{uncat_task['count']:>3} Task(s), "
+    f"{uncat_task['completed']:>3} Completed, "
+    f"{(uncat_task['count'] - uncat_task['completed']):>3} Pending."
+)
 
 
 # todo: https://chatgpt.com/c/678e22da-53cc-800a-a1ad-d4eadb1ad6cb
 
 def help():
-    print("\na) Add a task\nr) Remove a task \nc) Check a task\nat) Archive a task\nma) Mark all as incomplete/complete\nch) Change a task\nd) Display todos\nac) Archive completed tasks\nda) Display archived tasks\nrc) Remove completed tasks\nss) Show statistics\nh) Help\nq) Exit\n")
+    print(
+    "\n"
+    "a)  Add a task\n"
+    "r)  Remove a task\n"
+    "c)  Check a task\n"
+    "at) Archive a task\n"
+    "ma) Mark all as incomplete/complete\n"
+    "ch) Change a task\n"
+    "d)  Display todos\n"
+    "ac) Archive completed tasks\n"
+    "da) Display archived tasks\n"
+    "rc) Remove completed tasks\n"
+    "ct) Clear tasks\n"
+    "ca) Clear archive\n"
+    "ss) Show statistics\n"
+    "h)  Help\n"
+    "e)  Exit\n"
+)
+
 
 def main(): # creating the user interface
     todo_tasks = []
     archived_tasks = []
     print("Todo List:")
-    print("\na) Add a task\nr) Remove a task \nc) Check a task\nat) Archive a task\nma) Mark all as incomplete/complete\nch) Change a task\nd) Display todos\nac) Archive completed tasks\nda) Display archived tasks\nrc) Remove completed tasks\nss) Show statistics\nh) Help\nq) Exit\n")
+    print(
+    "\n"
+    "a)  Add a task\n"
+    "r)  Remove a task\n"
+    "c)  Check a task\n"
+    "at) Archive a task\n"
+    "ma) Mark all as incomplete/complete\n"
+    "ch) Change a task\n"
+    "d)  Display todos\n"
+    "ac) Archive completed tasks\n"
+    "da) Display archived tasks\n"
+    "rc) Remove completed tasks\n"
+    "ct) Clear tasks\n"
+    "ca) Clear archive\n"
+    "ss) Show statistics\n"
+    "h)  Help\n"
+    "e)  Exit\n"
+)
+
     choice = None
-    while choice != 'q':
+    while choice != 'e':
         choice = input("Your choice? ")
         match choice:
             case 'a':
@@ -223,6 +266,12 @@ def main(): # creating the user interface
             case 'rc':
                 todo_tasks = remove_completed_todos(todo_tasks)
                 print("The completed tasks have been removed from the todo list.")
+            case 'ct':
+                todo_tasks = remove_all(todo_tasks)
+                print("The todo list has been cleared.")
+            case 'ca':
+                archived_tasks = remove_all(archived_tasks)
+                print("The archived list has been cleared.")
             case 'ac':
                 new_archived = archive_complete(todo_tasks)  # Archive completed tasks
                 archived_tasks.extend(new_archived) # adding the new archived to the existing list
@@ -235,8 +284,8 @@ def main(): # creating the user interface
                 show_statistics(todo_list=todo_tasks, archived_list=archived_tasks)
             case 'h':
                 help()
-            case 'q':
-                print("....quiting")
+            case 'e':
+                print("....exiting")
             case _:
                 print("Invalid operation.😬")
 main()
