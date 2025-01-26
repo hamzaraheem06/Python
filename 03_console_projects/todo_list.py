@@ -16,11 +16,11 @@ def add_task(todo_tasks):
         # providing a category option list
         for index, category in enumerate(categories):
             print(f"{index}) {category}")
-        categoriy_index = int(input(f"Category: "))
+        categoriy_index = int(input(f"Category index: "))
         
         while not(0 <= categoriy_index < len(categories)):
             print("Invalid category.")
-            categoriy_index = int(input(f"Category: "))
+            categoriy_index = int(input(f"Category index: "))
         
         task["category"] = categories[categoriy_index]
 
@@ -174,9 +174,8 @@ def show_statistics(todo_list, archived_list):
 
     # displaying the stats
     print(f"\nTotal tasks: {total_tasks}")
-    print(f"Completed tasks: {completed_tasks}")
-    print(f"Pending tasks: {pending_tasks}")
-    print(f"Completion rate: {round(completed_tasks / total_tasks, ndigits=2) * 100}")
+    print(f"Completed tasks: {completed_tasks}  ({round(completed_tasks / total_tasks, ndigits=2) * 100})")
+    print(f"Pending tasks: {pending_tasks}  ({round((pending_tasks / total_tasks) , ndigits=2) * 100})")
 
     # displaying the categorized stats
 
@@ -226,6 +225,7 @@ def main(): # creating the user interface
     todo_tasks = []
     archived_tasks = []
     print("Todo List:")
+    print('~' * len("Todo List:"))
     print(
     "\n"
     "a)  Add a task\n"

@@ -1,0 +1,12 @@
+Python is a cool language.
+
+Internal working of Python:
+In other fundamental programming languages like C/C++, Java, etc., the source code is converted to machine code, machine code gives direct instructions to the computer hardware. However, Python code is firstly compiled to something called as Byte Code (.pyc). 
+
+Byte Code is not a machine code. It cannot give direct instructions to CPU. This is done for the sake of optimization when we import multiple modules in a file. It doesn't happen when we work on a single or a top level file because there is no need of further optimization as there is one long single code that can be interpreted directly.
+
+To execute/interprete this Byte Code, Python has a Python Virtual Machine (PVM) which interpretes this code and we get the output.
+
+A simple flow chart of this would be:
+
+Python Code (.py) ---(compiling)---> Byte Code (.pyc) ---(PVM)---> Output

@@ -89,8 +89,8 @@ def findTrailingZeros(num: int):
     # 28 >= 125 becomes false and we get our answer
 
 
-num = int(input("Enter a number: "))
-print(f"The number of trailing zeros in factorial of {num} i.e. {factorial(num)} are {findTrailingZeros(num)}")
+# num = int(input("Enter a number: "))
+# print(f"The number of trailing zeros in factorial of {num} i.e. {factorial(num)} are {findTrailingZeros(num)}")
 
 # very good solution 👍👍
 
