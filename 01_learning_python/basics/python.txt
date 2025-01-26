@@ -1,4 +1,4 @@
-Python is a cool language.
+Python is a cool language, and JavaScript is a vibe-based language. C++ is for nerds.
 
 Internal working of Python:
 In other fundamental programming languages like C/C++, Java, etc., the source code is converted to machine code, machine code gives direct instructions to the computer hardware. However, Python code is firstly compiled to something called as Byte Code (.pyc). 
@@ -10,3 +10,11 @@ To execute/interprete this Byte Code, Python has a Python Virtual Machine (PVM) 
 A simple flow chart of this would be:
 
 Python Code (.py) ---(compiling)---> Byte Code (.pyc) ---(PVM)---> Output
+
+
+Immutability and Mutability in Python:
+Immutability refers to that any reference to value in memory is unchangable. It doesn't mean that the variable's value can't change. 
+
+for example,
+username = 'Hamza' will create an object in memory which will contain 'Hamza', and then username will point to it. If we change the username's value to 'Ayesha', an another object containing 'Ayesha' will be created and then the username will point to it. 
+Notice how there has been no change in original 'Hamza' object, this is what Immutability means in Python and since there is a garbage collector provided in Python, the 'Hamza' object is automatically deleted by the garbage collector.
