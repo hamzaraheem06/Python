@@ -37,3 +37,6 @@ for i in range(0, 5):
 print(numbers)
 
 print(sum(numbers))
+
+# the dir() functions returns a list containing all the definitions inside a modulde
+# the reload() function defined in imp module is used to reload the changes made in the already imported module so that the changes are visible in the script

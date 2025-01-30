@@ -94,6 +94,11 @@ def findTrailingZeros(num: int):
 
 # very good solution 👍👍
 
+# Sum of digits of a Number till it Becomes a Single digit.
+
+# sum individual digits one by one of a number using the modulo operator and then discard the added term.
+# check if the resulting sum is a single digit number.
+
 def sum_of_digits_of_num(num: int):
     while True:
         sum = 0
@@ -110,6 +115,11 @@ def sum_of_digits_of_num(num: int):
 # num = int(input("Enter a number: "))
 # print(f"Sum of digits of {num} is {sum_of_digits_of_num(num)}")
 
+# palindrome_integer
+# a palindrome integer is an integer that remains same even after the reversing it.
+
+# reverse the number and compare with the original number.
+
 def palindrome_integer(num: int) -> bool:
     temp = num
     reversed = 0
@@ -125,3 +135,59 @@ def palindrome_integer(num: int) -> bool:
 # num = int(input("Enter a number: "))
 
 # print("Palindrome" if palindrome_integer(num) else "Not Palindrome")
+
+# Armstrong Number
+# an armstrong number is a number whose sum of digits each raised to power number of digits in the number is equal to the orginal number.
+
+# calc the number of digits len_digits in the number
+# using modulo operator sum all the digits raised to len_digits and discard the last digit after its sum has been calculated.
+
+def is_armstrong(a: int) -> bool:
+    len_of_number = len(str(a)) # calculating the # of digits in the number
+
+    temp = a # creating a temp var for manipulation
+    sum = 0 # initializing the sum value
+    while temp != 0:
+        sum += ( temp % 10 ) ** len_of_number # seperating each digit one-by-one and add their power to the sum var.
+        temp //= 10 # discard the added term.
+    
+    return True if sum == a else False  # comparing the values
+
+# Perfect number
+
+# An integer is a perfect number if it is equal to sum of its proper divisors.
+
+# initialize a sum var to 1, because one is a proper divisor of every number.
+# run a loop from 2 to half of the number 
+# check if the i divides the number completely if yes add it to sum 
+# compare the values
+
+def is_perfect(a: int) -> bool: # very self explainable code.
+    sum = 1
+    for i in range(2, a // 2 + 1):
+        if not a % i:
+            sum += i
+    
+    return True if sum == a else False  # comparing the values
+
+# prime factors are numbers that divide the number completely and they are prime. 
+
+# intialize an empty list to store the prime factors.
+# a number can only be divisible by a number less than or equal to half of the number.
+# we check if the i divides the number and if it is also a prime number
+# we append i the number of times it divides the number, and after each appending we remove its factor from the original value
+
+
+def prime_factors(a: int) -> list:
+    factors = []
+
+    for i in range(2, a // 2 + 1):
+        while  not a % i and isPrime(i):
+            factors.append(i)
+            a //= i
+
+    return factors
+
+print(prime_factors(90))
+    
+
