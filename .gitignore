@@ -5,3 +5,5 @@ package.json
 *.cpp
 *.exe
 test.py
+
+__pycache__
