@@ -38,4 +38,17 @@ def rightTriangle(n):
             print(j, end="")
         print("\n")
 
-rightTriangle(5)
+
+balance = 10.0 
+
+order  = 10
+
+def calc_rem_balance(balance, order):
+    try:
+        return float(balance) - float(order)
+    except:
+        return float(balance) - 0.0
+    finally:
+        print("The calcuations have been done.")
+
+print(calc_rem_balance(balance, order))

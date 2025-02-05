@@ -16,11 +16,13 @@ def add_task(todo_tasks):
         # providing a category option list
         for index, category in enumerate(categories):
             print(f"{index}) {category}")
-        categoriy_index = int(input(f"Category index: "))
-        
+
+        categoriy_index = len(categories) + 1
         while not(0 <= categoriy_index < len(categories)):
-            print("Invalid category.")
-            categoriy_index = int(input(f"Category index: "))
+            try: 
+                categoriy_index = int(input(f"Category index: "))
+            except:
+                print("Please enter an integer value.")
         
         task["category"] = categories[categoriy_index]
 
@@ -51,7 +53,7 @@ def remove_todo(todo_list):
 # define: Filter in Python -> new_list = [expression for item in iterable if condition]
 
 def remove_all(list):
-    return []
+    return list.clear()
 
 def check_todo(todo_list):
     if not len(todo_list): # handling empty list case.

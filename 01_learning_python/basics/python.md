@@ -1,4 +1,6 @@
-# Python is a cool language, and JavaScript is a vibe-based language. C++ is for nerds.
+# Python: A Cool Programming Language
+
+"Python is a cool language, and JavaScript is a vibe-based language. C++ is for nerds and Java is for braindead." ~ Hamza, 2025
 
 ## Internal working of Python:
 

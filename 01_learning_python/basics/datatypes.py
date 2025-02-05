@@ -5,7 +5,7 @@
 #      used to store an integer value like 5, 98, 1000, 100000, etc
 # ii) float 
 #      used to store decimal values like 9.8, 3.14, 3e12 etc
-#      aeb = a * 10^b ( maximum limit = 1.8e308. Anything above that will give inf error. ) 
+#      aeb = a * 10^b ( note: maximum limit = 1.79e308. Anything above that will give inf error. ) 
 #      3e12 = 3 * 10^12 = 3000000000000.0
 #      float.as_integer_ratio() : Returns a pair of integers whose ratio is exactly equal to the actual float having a positive denominator. In case of infinites, it raises overflow error and value errors on Not a number (NaNs).
 # a = 3.5
