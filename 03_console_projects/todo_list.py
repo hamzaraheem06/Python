@@ -29,6 +29,13 @@ def add_task(todo_tasks):
     todo_tasks.append(task) # adding the todo to the list
     print(f"'{task['task']}' has been added to todo list.") 
 
+    answer = input("Another ( Y or y for Yes )?  ")
+
+    if answer.lower() == 'y':
+        add_task(todo_tasks)
+    
+    return 
+
 def remove_todo(todo_list):
     if not len(todo_list): # handling empty list case.
         print("The todo list is empty. No available task to be removed.")
@@ -52,8 +59,8 @@ def remove_todo(todo_list):
 
 # define: Filter in Python -> new_list = [expression for item in iterable if condition]
 
-def remove_all(list):
-    return list.clear()
+def remove_all(list = []):
+    return list.clear() 
 
 def check_todo(todo_list):
     if not len(todo_list): # handling empty list case.

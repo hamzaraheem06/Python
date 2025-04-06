@@ -89,6 +89,6 @@ Then in line 2, b = a means b should point to a reference that a is pointing.
 
 Therefore, when we used is operator in line 4 we get True.
 
-Then in line 5 we assign the same value to a again. Then a new reference is created and a then points to new reference.
+Then in line 5 we explicity assign the same value to a again. Then a new reference is created and a then points to new reference.
 
 That's why, altough they have same value but a different memory address.
