@@ -11,6 +11,6 @@ qr = qc.QRCode(version=version, box_size=box_size, border=border)
 qr.add_data(website_link)
 qr.make()
 
-img = qr.make_image(fill_color = "black", back_color = "white")
+img = qr.make_image(fill_color = "pink", back_color = "white")
 
 img.save("generate_qr.png")

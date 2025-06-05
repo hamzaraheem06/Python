@@ -2,14 +2,8 @@ import random as r
 categories = ['work', 'personal', 'study', 'finance', 'health']
 
 def add_task(todo_tasks):
-    task = {
-        "task": "",
-        "isCompleted": False,
-        "id": None,
-        "category": None
-    } # defining a todo structure
-    task["task"] = input("Write a todo : ") # initializing the todo task 
-    task["id"] = r.randrange(1000, 5656) // r.randrange(1, 50) # generating a random id to unique tracking of a task
+    task = {"task": input("Write a todo : "), "isCompleted": False, "id": r.randrange(1000, 5656) // r.randrange(1, 50),
+            "category": None}  # defining a todo structure
 
     add_category = input("Do you want to assign a category  ( Y or y for Yes )? ")
     if add_category.lower() == 'y':
@@ -42,9 +36,9 @@ def remove_todo(todo_list):
         return 
     display_todos(todo_list) # displaying all the task to assist user
     remove_id = int(input("Enter the id of the task to be removed: ")) # knowing which one to evict
-    # todo_list = [task for task in todo_list if task["id"] != remove_id] # hunting the mother fucker down
+    # todo_list = [task for task in todo_list if task["id"] != remove_id] # hunting the motherfucker down
 
-    new_list = [] # creating a new list for the updation
+    new_list = [] # creating a new list for the update
 
     for i in todo_list:
         if i["id"] == remove_id:
@@ -83,7 +77,7 @@ def check_todo(todo_list):
 def archive_task(todo_list: list, archived_list: list):
     if not len(todo_list): # handling empty list case
         print("Empty todo list. Cannot perform this operation")
-        return
+        return None
 
     display_todos(todo_list) # displaying the list to assit the user for selection
     complete_id = int(input("Enter the id of the task: ")) # knowing which one to tick
@@ -95,6 +89,8 @@ def archive_task(todo_list: list, archived_list: list):
             return todo_list, archived_list # returning the updated list
         
     print(f"No such task with id {complete_id} exist.") # handling 404 case
+    return None
+
 
 def mark_all(todo_list):
     if not len(todo_list): # handling the empty list case
