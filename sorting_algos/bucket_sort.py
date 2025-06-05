@@ -65,7 +65,7 @@ def bucket_sort_normalized(nums: list[int]) -> list[int]:
 
     return num_list # Returns sorted normalized values
 
-nums = [random.random() for _ in range(1_000_000)] # for normal data
+nums = [random.random() for _ in range(1_00_000)] # for normal data
 
 # nums = [random.randint(-10**2, 10**2) for _ in range(1_00)] # for unnormal data
 
@@ -74,9 +74,6 @@ start_time = t.time_ns()
 sorted_nums = bucket_sort(nums)
 
 stop_time = t.time_ns()
-
-print("Unsorted:", nums)
-print("Sorted:",sorted_nums)
 
 total_time = stop_time - start_time
 print("Time taken (s):", total_time / 1_000_000_000) 

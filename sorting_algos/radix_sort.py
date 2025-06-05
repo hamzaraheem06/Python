@@ -36,7 +36,7 @@ def radix_sort(nums: list[int]) -> list[int]:
 
     return num_list
 
-nums = [r.randint(0, 10**6) for _ in range(1_000_000)]
+nums = [r.randint(0, 10**6) for _ in range(1_00_000)]
 
 start_time = t.time_ns()
 

@@ -115,3 +115,52 @@ def radix_sort(nums: list[int]) -> list[int]:
 
     return num_list
 
+def comb_sort(nums: list[int]) -> list[int]:
+    # Create a copy to avoid modifying the input list
+    num_list = nums[:]
+    n = len(num_list)
+    
+    # Initialize gap as the length of the list
+    gap = n
+    shrink_factor = 1.3  # Optimal shrink factor
+    swapped = False
+    
+    # Continue until gap is 1 and no swaps occur
+    while gap > 1 or swapped: # only terminates when both conditions are false.
+        # Shrink the gap
+        gap = max(1, int(gap / shrink_factor))
+        swapped = False
+        
+        # Compare and swap elements separated by gap
+        for i in range(0, n - gap):
+            if num_list[i] > num_list[i + gap]: # compare i'th with (i + gap)'th 
+                num_list[i], num_list[i + gap] = num_list[i + gap], num_list[i]
+                swapped = True # means swapping has occured
+    
+    return num_list
+
+def partition(nums, low, high) -> int:
+    pivot = nums[high]
+    i = low - 1
+
+    for j in range(low, high):
+        if nums[j] <= pivot:
+            i += 1
+            nums[j], nums[i] = nums[i], nums[j]
+        
+    nums[i+1], nums[high] = nums[high], nums[i+1] 
+
+    return i + 1 # pivot point 
+
+
+def quick_sort(nums: list[int], low = 0, high = None) -> list[int]:
+    if high is None:
+        high = len(nums) - 1
+    
+    if low < high:
+        partition_index = partition(nums, low, high)
+        quick_sort(nums, low, partition_index - 1)
+        quick_sort(nums, partition_index + 1, high)
+    
+    return nums
+ 
